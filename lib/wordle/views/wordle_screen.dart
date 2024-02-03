@@ -18,9 +18,31 @@ class _WordleScreenState extends State<WordleScreen> {
     (_) => Word(letters: List.generate(5, (_) => Letter.empty())),
   );
 
+  int _currentWordIndex =0;
+
+  Word? get _currentWord =>
+    _currentWordIndex < _board.length ? _board[_currentWordIndex] : null;
+
+  Word _solution = Word.fromString (
+    fiveLetterWords[Random().nextInt(fiveLetterWords.length)].toUpperCase(),
+  );
+
   @override
   Widget build(BuildContext context){
-    return Container (
+    return Scaffold (
+      appBar: AppBar(
+        centerTitle: true,
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        title: const Text(
+          'WORDLE',
+          style: TextStyle(
+            fontSize: 36,
+            fontWeight: FontWeight.bold,
+            letterSpacing: 4
+          ),
+        )
+      )
 
     );
   }
