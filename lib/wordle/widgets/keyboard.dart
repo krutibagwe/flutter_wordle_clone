@@ -101,7 +101,18 @@ class _KeyboardButton extends StatelessWidget{
         borderRadius: BorderRadius.circular(4),
         child: InkWell(
           onTap: onTap,
-          child: Container(),
+          child: Container(
+            height: height,
+            width: width,
+            alignment: Alignment.center,
+            child: Text(
+              letter,
+              style: const TextStyle(
+                fontSize: 12,
+                fontWeight: FontWeight.w600,
+              ),
+            ),
+          ),
         ),
       ),
     );
