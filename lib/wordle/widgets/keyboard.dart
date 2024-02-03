@@ -59,6 +59,26 @@ class _KeyboardButton extends StatelessWidget{
     required this.letter,
      }) : super(key: key);
 
+     factory _KeyboardButton.delete({
+      required VoidCallback onTap,
+     }) =>
+        _KeyboardButton(
+          width: 56,
+          onTap: onTap,
+          backgroundColor: Colors.grey,
+          letter: 'DEL',
+        );
+
+      factory _KeyboardButton.enter({
+      required VoidCallback onTap,
+     }) =>
+        _KeyboardButton(
+          width: 56,
+          onTap: onTap,
+          backgroundColor: Colors.grey,
+          letter: 'ENTER',
+        );
+
      final double height;
 
      final double width;
@@ -71,8 +91,19 @@ class _KeyboardButton extends StatelessWidget{
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-
+    return Padding(
+      padding: const EdgeInsets.symmetric(
+        vertical: 3.0,
+        horizontal: 2.0,
+      ),
+      child: Material(
+        color: backgroundColor,
+        borderRadius: BorderRadius.circular(4),
+        child: InkWell(
+          onTap: onTap,
+          child: Container(),
+        ),
+      ),
     );
   }
 }
