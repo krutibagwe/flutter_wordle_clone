@@ -17,5 +17,14 @@ class Word extends Equatable{
         letters[currentIndex] = Letter(val: val);
       }
     }
-    
+
+    void removeLetter(){
+      final recentLetterIndex = letters.lastIndexWhere((e) => e.val.isNotEmpty);
+      if (recentLetterIndex != -1){
+        letters[recentLetterIndex] = Letter.empty();
+      }
+    }
+
+    @override
+    List<Object?> get props => [letters];
 }
