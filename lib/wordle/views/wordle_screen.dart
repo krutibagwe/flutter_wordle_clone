@@ -43,7 +43,12 @@ class _WordleScreenState extends State<WordleScreen> {
           ),
         )
       )
-
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Board(board: _board),
+        ],
+      ),
     );
   }
 }
