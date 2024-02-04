@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_wordle_clone/wordle/models/letter_model.dart';
 import 'package:flutter_wordle_clone/wordle/wordle.dart';
 
 enum GameStatus { playing, submitting, lost, won}
@@ -79,7 +80,30 @@ void _onEnterTapped(){
       for (var i=0; i< _currentWord!.letters.length; i++){
         final currentWordLetter = _currentWord!.letters[i];
         final currentSolutionLetter = _solution.letters[i];
+
+        setState(() {
+          if (currentWordLetter = currentSolutionLetter){
+            _currentWord!.letters[i]=
+              currentWordLetter.copyWith(status: LetterStatus.correct);
+          } else if (_solution.letters.contains(currentWordLetter)){
+            _currentWord!.letters[i]=
+              currentWordLetter.copyWith(status: LetterStatus.inWord);
+          } else {
+            _currentWord!.letters[i]=
+              currentWordLetter.copyWith(status: LetterStatus.notInWord);
+          }
+        });
       }
+
+      _checkIfWinOrLoss();
+    }
+  }
+
+  void _checkIfWinOrLoss(){
+    if (_currentWord!.wordString == _solution.wordString){
+      _gameStatus = GameStatus.won;
+    } else if (_currentWordIndex +1 >= _board.length){
+      _gameStatus = GameStatus.lost;
     }
   }
 
