@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_wordle_clone/wordle/wordle.dart';
 
-class Board extends StatelessWidget {
-  const Board({
+class BoardTile extends StatelessWidget {
+  const BoardTile({
     Key? key,
     required this.letter,
   }) : super(key: key);

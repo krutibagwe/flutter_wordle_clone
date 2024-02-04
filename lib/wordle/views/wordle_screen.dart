@@ -4,6 +4,8 @@ import 'package:flutter_wordle_clone/app/app_colors.dart';
 import 'package:flutter_wordle_clone/wordle/data/word_list.dart';
 //import 'package:flutter_wordle_clone/wordle/models/letter_model.dart';
 import 'package:flutter_wordle_clone/wordle/wordle.dart';
+import 'dart:math';
+
 
 enum GameStatus { playing, submitting, lost, won}
 
@@ -61,7 +63,7 @@ class _WordleScreenState extends State<WordleScreen> {
           const SizedBox(height: 80),
           Keyboard(
             onKeyTapped: _onKeyTapped,
-            onDeleteTapped: _onDeteleTapped,
+            onDeleterTapped: _onDeteleTapped,
             onEnterTapped: _onEnterTapped,
             letters: _keyboardLetters,
           ),
@@ -93,7 +95,7 @@ Future<void> _onEnterTapped() async {
         final currentSolutionLetter = _solution.letters[i];
 
         setState(() {
-          if (currentWordLetter = currentSolutionLetter){
+          if (currentWordLetter == currentSolutionLetter){
             _currentWord!.letters[i]=
               currentWordLetter.copyWith(status: LetterStatus.correct);
           } else if (_solution.letters.contains(currentWordLetter)){
@@ -110,7 +112,7 @@ Future<void> _onEnterTapped() async {
         orElse: () => Letter.empty(),
       );
       if (letter.status != LetterStatus.correct){
-        _keyboardLetters.removeWhere((e) => currentWordLetter.val);
+        _keyboardLetters.removeWhere((e) => e.val == currentWordLetter.val);
         _keyboardLetters.add(_currentWord!.letters[i]);
       }
 
