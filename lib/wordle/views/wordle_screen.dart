@@ -47,8 +47,20 @@ class _WordleScreenState extends State<WordleScreen> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Board(board: _board),
+          const SizedBox(height: 80),
+          Keyboard(
+            onKeyTapped: _onKeyTapped,
+            onDeleteTapped: _onDeteleTapped,
+            onEnterTapped: _onEnterTapped,
+          ),
         ],
       ),
     );
+  }
+
+  void _onKeyTapped(String val){
+    if (_gameStatus == GameStatus.playing){
+      setState(()=> _currentWord?.addLetter(val));
+    }
   }
 }
