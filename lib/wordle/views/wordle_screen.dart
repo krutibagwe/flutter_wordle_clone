@@ -1,7 +1,8 @@
+import 'package:flip_card/flip_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_wordle_clone/app/app_colors.dart';
 import 'package:flutter_wordle_clone/wordle/data/word_list.dart';
-import 'package:flutter_wordle_clone/wordle/models/letter_model.dart';
+//import 'package:flutter_wordle_clone/wordle/models/letter_model.dart';
 import 'package:flutter_wordle_clone/wordle/wordle.dart';
 
 enum GameStatus { playing, submitting, lost, won}
@@ -21,6 +22,11 @@ class _WordleScreenState extends State<WordleScreen> {
     (_) => Word(letters: List.generate(5, (_) => Letter.empty())),
   );
 
+  final List<List<GlobalKey<FlipCardState>>> _flipCardKeys = List.generate(
+    6,
+    (_) => List.generate(5, (_) => GlobalKey<FlipCardState>()),
+  );
+  
   int _currentWordIndex =0;
 
   Word? get _currentWord =>
@@ -47,11 +53,11 @@ class _WordleScreenState extends State<WordleScreen> {
             letterSpacing: 4
           ),
         )
-      )
+      ),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Board(board: _board),
+          Board(board: _board, flipCardKeys: _flipCardKeys),
           const SizedBox(height: 80),
           Keyboard(
             onKeyTapped: _onKeyTapped,
@@ -76,7 +82,7 @@ void _onDeteleTapped(){
   }
 }
 
-void _onEnterTapped(){
+Future<void> _onEnterTapped() async {
   if (_gameStatus == GameStatus.playing &&
     _currentWord != null &&
     !_currentWord!.letters.contains(Letter.empty())){
@@ -107,6 +113,11 @@ void _onEnterTapped(){
         _keyboardLetters.removeWhere((e) => currentWordLetter.val);
         _keyboardLetters.add(_currentWord!.letters[i]);
       }
+
+      await Future.delayed(
+        const Duration(milliseconds: 150),
+        () => _flipCardKeys[_currentWordIndex][i].currentState?.toggleCard(),
+      );
       }
 
       _checkIfWinOrLoss();
@@ -171,6 +182,15 @@ void _onEnterTapped(){
         _solution = Word.fromString(
           fiveLetterWords[Random().nextInt(fiveLetterWords.length)].toUpperCase(),
         );
+        _flipCardKeys
+          ..clear()
+          ..addAll(
+            List.generate(
+              6,
+              (_) => List.generate(5, (_) => GlobalKey<FlipCardState>()),
+            ),
+          );
+        _keyboardLetters.clear();
     });
   }
 
