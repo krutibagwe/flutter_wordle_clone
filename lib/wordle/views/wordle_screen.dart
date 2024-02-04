@@ -30,6 +30,8 @@ class _WordleScreenState extends State<WordleScreen> {
     fiveLetterWords[Random().nextInt(fiveLetterWords.length)].toUpperCase(),
   );
 
+  final Set<Letter> _keyboardLetters = {};
+
   @override
   Widget build(BuildContext context){
     return Scaffold (
@@ -55,6 +57,7 @@ class _WordleScreenState extends State<WordleScreen> {
             onKeyTapped: _onKeyTapped,
             onDeleteTapped: _onDeteleTapped,
             onEnterTapped: _onEnterTapped,
+            letters: _keyboardLetters,
           ),
         ],
       ),

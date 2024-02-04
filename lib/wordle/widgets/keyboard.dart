@@ -1,5 +1,4 @@
 import 'dart:js_interop_unsafe';
-
 import 'package:flutter/material.dart';
 
 const _qwerty = [
@@ -14,6 +13,7 @@ class Keyboard extends StatelessWidget {
     required this.onKeyTapped,
     required this.onDeleterTapped,
     required this.onEnterTapped,
+    required this.letters,
     }) : super(key: key);
 
   final void Function(String) onKeyTapped;
@@ -21,6 +21,8 @@ class Keyboard extends StatelessWidget {
   final VoidCallback onDeleterTapped;
 
   final VoidCallback onEnterTapped;
+
+  final Set<Letter> letters;
 
   @override
   Widget build(BuildContext context){
