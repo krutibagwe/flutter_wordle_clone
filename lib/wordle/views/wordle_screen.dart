@@ -98,6 +98,15 @@ void _onEnterTapped(){
               currentWordLetter.copyWith(status: LetterStatus.notInWord);
           }
         });
+      
+      final letter = _keyboardLetters.firstWhere(
+        (e) => e.val == currentWordLetter.val,
+        orElse: () => Letter.empty(),
+      );
+      if (letter.status != LetterStatus.correct){
+        _keyboardLetters.removeWhere((e) => currentWordLetter.val);
+        _keyboardLetters.add(_currentWord!.letters[i]);
+      }
       }
 
       _checkIfWinOrLoss();

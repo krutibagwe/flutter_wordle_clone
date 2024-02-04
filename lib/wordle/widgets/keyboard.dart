@@ -1,5 +1,6 @@
 import 'dart:js_interop_unsafe';
 import 'package:flutter/material.dart';
+import 'package:flutter_wordle_clone/wordle/models/letter_model.dart';
 
 const _qwerty = [
   ['Q', 'W', 'E', 'R', 'T', 'Y', 'U', 'I', 'O', 'P'],
@@ -23,7 +24,7 @@ class Keyboard extends StatelessWidget {
   final VoidCallback onEnterTapped;
 
   final Set<Letter> letters;
-
+/*
   @override
   Widget build(BuildContext context){
     return Column(
@@ -37,10 +38,20 @@ class Keyboard extends StatelessWidget {
                 if (letter == 'DEL'){
                   return _KeyboardButton.delete(onTap: onDeleterTapped);
                 } else if (letter == 'ENTER'){
+                    return _KeyboardButton.enter(onTap: onEnterTapped);
+                }
+
+                final letterKey = letters.firstWhere(
+                  (e) => e.val == letter,
+                  orElse: () => Letter.empty(),
+                );
+
                   return _KeyboardButton(
                     onTap: () => onKeyTapped(letter),
-                  )letter: letter,
-                  backgroundColor: Colors.grey,
+                    letter: letter,
+                    backgroundColor: letterKey != Letter.empty()
+                      ? letter.Key.backgroundColor
+                      : Colors.grey,
                 };
               },
             ).toList(),
@@ -50,6 +61,44 @@ class Keyboard extends StatelessWidget {
     );
   }
 }
+*/
+
+@override
+Widget build(BuildContext context) {
+  return Column(
+    mainAxisAlignment: MainAxisAlignment.center,
+    children: _qwerty
+        .map(
+          (keyRow) => Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: keyRow.map(
+              (letter) {
+                if (letter == 'DEL') {
+                  return _KeyboardButton.delete(onTap: onDeleterTapped);
+                } else if (letter == 'ENTER') {
+                  return _KeyboardButton.enter(onTap: onEnterTapped);
+                }
+
+                final letterKey = letters.firstWhere(
+                  (e) => e.val == letter,
+                  orElse: () => Letter.empty(),
+                );
+
+                return _KeyboardButton(
+                  onTap: () => onKeyTapped(letter),
+                  letter: letter,
+                  backgroundColor: letterKey != Letter.empty()
+                      ? letterKey.backgroundColor
+                      : Colors.grey,
+                ); 
+              },
+            ).toList(),
+          ),
+        )
+        .toList(),
+  );
+}
+
 
 class _KeyboardButton extends StatelessWidget{
   const _KeyboardButton({
